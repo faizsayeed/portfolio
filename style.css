@@ -1,0 +1,211 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(to right, #000000, rgb(41, 41, 41));
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.active {
+  color: rgb(21, 250, 0);
+  text-decoration: none;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 100px;
+  margin-top: 20px;
+}
+
+.logo {
+  color: aliceblue;
+  font-size: 30px;
+  font-weight: 900;
+  transition: transform 1s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+}
+
+.nav {
+  color: aliceblue;
+  margin-left: 50px;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 400;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav:hover {
+  color: rgb(21, 250, 0);
+  transform: translateY(-2px);
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 100px;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+.info {
+  flex: 1;
+  padding-right: 50px;
+}
+
+.name {
+  font-size: 30px;
+  font-weight: bolder;
+  margin-bottom: 5px;
+  
+}
+
+
+
+.course {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+.lrm {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.image-container {
+  flex: 0 0 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+img {
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border: 3px solid rgb(0, 255, 42);
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.image-container::after,
+.image-container::before {
+  --angle: 0deg;
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(from var(--angle), transparent 10%, rgb(255, 255, 255),rgb(255, 0, 0));
+  animation: 3s spin linear infinite;
+  z-index: -1;
+  opacity: 4;
+  
+}
+
+.image-container::before {
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+@media (max-width: 1024px) {
+  .content {
+    flex-direction: column;
+    padding: 50px;
+  }
+
+  .info {
+    padding-right: 0;
+    margin-bottom: 50px;
+  }
+
+  .image-container {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+  }
+
+  .nav-links {
+    margin-top: 20px;
+  }
+
+  .nav {
+    margin: 0 10px;
+  }
+
+  img {
+    width: 300px;
+    height: 300px;
+  }
+
+  .image-container::after,
+  .image-container::before {
+    inset: -2px;
+  }
+}
+.button{
+  color: black;
+  background-color: rgb(181, 251, 90);
+  padding: 3px;
+  margin: 5px;
+  border-radius: 8px;
+  border: none;
+  transition: transform 0.3s ease,color 0.3s ease;
+  font-weight: 500;
+  border: 3px solid rgb(93, 91, 91);
+  text-decoration: none;
+
+  
+}
+.button:hover{
+   background-color: rgb(0, 255, 51);
+
+   
+}
+
