@@ -543,23 +543,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Try direct endpoint, with one retry, then fallback to proxy (if provided)
-  async function loadWithFallback() {
-    const body = { query, variables: { username: USERNAME } };
+ async function loadWithFallback() {
+  const body = { query, variables: { username: USERNAME } };
 
-    // If session flag indicates direct failed previously, skip direct and use proxy
-    const directPreviouslyFailed = sessionStorage.getItem('lc_direct_failed') === '1';
-
-    // Helper to attempt direct fetch
-    async function tryDirect() {
-      try {
-        const json = await postJson(DIRECT_ENDPOINT, body, { mode: 'cors' });
-        return json;
-      } catch (err) {
-        // Common CORS failures manifest as TypeError: Failed to fetch (caught earlier by postJson wrapper)
-        console.warn('Direct LeetCode fetch failed:', err);
-        throw err;
-      }
+  // If deployed (not local), use proxy immediately and return the result
+  if (USE_PROXY_ALWAYS && PROXY_URL) {
+    try {
+      const pdata = await postJson(PROXY_URL, body, { mode: 'cors' });
+      fillFromGraphQL(pdata);
+      return;
+    } catch (err) {
+      console.warn('Proxy fetch failed (unexpected):', err);
+      showUnavailable('Profile unavailable');
+      return;
     }
+  }
+
+  // --- keep existing direct -> proxy fallback below for local dev if you want ---
+  // (your original direct/proxy fallback code goes here)
+}
 
     // Helper to attempt proxy fetch
     async function tryProxy(proxyUrl) {
@@ -633,3 +635,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 })();
+
+
+// === LeetCode endpoint configuration ===
+const USERNAME = 'ShaikMohdFaizSayeed';
+const DIRECT_ENDPOINT = 'https://leetcode.com/graphql';
+
+// Use the proxy worker to avoid CORS from browsers.
+// Make the deployed site prefer the proxy; only try direct when running locally.
+const IS_LOCAL = (location.hostname === '127.0.0.1' || location.hostname === 'localhost');
+const PROXY_URL = "https://bold-resonance-1a80.faizsayeed16556.workers.dev/";
+const USE_PROXY_ALWAYS = !IS_LOCAL;
