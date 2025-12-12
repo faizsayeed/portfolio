@@ -6,38 +6,37 @@
     <title>Portfolio</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
   </head>
   <body>
     <nav class="navbar">
-    <a class="logo">Portfolio.</a>
-  <div class="nav-links">
-    <a class="active" href="#home">Home</a>
-    <a class="nav" href="#about">About</a>
-    <a class="nav" href="#skills">Skills</a>
-    <a class="nav" href="#Projects">Projects</a>
-    <a class="nav" href="#contact">Contact</a>
-  </div>
-</nav>
+      <a class="logo">Portfolio.</a>
+      <div class="nav-links">
+        <a class="nav" href="#home">Home</a>
+        <a class="nav" href="#about">About</a>
+        <a class="nav" href="#skills">Skills</a>
+        <a class="nav" href="#projects">Projects</a>
+        <a class="nav" href="#contact">Contact</a>
+      </div>
+    </nav>
 
-    <main class="content">
+    <main class="content" id="home">
+
       <div class="info">
         <p class="name">Shaik Mohd Faiz Sayeed</p>
         <p class="course">
-            I'm a <span id="typewriter"></span>
+          I'm a <span id="typewriter"></span>
         </p>
 
-
         <p class="lrm">
-          As a first-year B.Tech student with a passion for data science, 
-          I am eager to delve into the world of technology and analytics. 
-          I am enthusiastic about learning new skills, exploring innovative 
+          As a first-year B.Tech student with a passion for data science,
+          I am eager to delve into the world of technology and analytics.
+          I am enthusiastic about learning new skills, exploring innovative
           solutions, and applying my knowledge to real-world problems
         </p>
 
         <a class="button" href="#"><i class="fa-brands fa-linkedin"></i></a>
         <a class="button" href="#"><i class="fa-brands fa-github"></i></a>
-        <a class="button" href="#"><i class="fa-solid fa-code"></i></a> 
+        <a class="button" href="#"><i class="fa-solid fa-code"></i></a>
         <a class="button" href="#"><i class="fa-brands fa-instagram"></i></a>
 
       </div>
@@ -47,255 +46,299 @@
         <div class="card"></div>
       </div>
     </main>
-<section id="about" class="about-section">
-  <div class="about-container">
 
-    <!-- LEFT TEXT SECTION -->
-    <div class="about-left">
-      <h2 class="about-title">About Me</h2>
+    <section id="about" class="about-section">
+      <div class="about-container">
 
-      <p class="about-lead">
-        I'm <strong>Shaik Mohd Faiz Sayeed</strong>, a B.Tech CSE (Data Science) student who loves
-        learning by doing. I enjoy creating projects, experimenting with technology, and exploring how
-        software and data shape real-world solutions.
-      </p>
+        <!-- LEFT TEXT SECTION -->
+        <div class="about-left">
+          <h2 class="about-title">About Me</h2>
 
-      <p>
-        My approach is simple — understand the concept, break the problem down, and build a working
-        solution step by step. Whether it's building a device, writing backend logic, or analyzing
-        datasets, I enjoy being involved in the process.
-      </p>
+          <p class="about-lead">
+            I'm <strong>Shaik Mohd Faiz Sayeed</strong>, a B.Tech CSE (Data Science) student who loves
+            learning by doing. I enjoy creating projects, experimenting with technology, and exploring how
+            software and data shape real-world solutions.
+          </p>
 
-      <p>
-        I am always exploring new tools, improving my coding habits, and working on ideas that help me 
-        grow into a better developer and data professional.
-      </p>
+          <p>
+            My approach is simple — understand the concept, break the problem down, and build a working
+            solution step by step. Whether it's building a device, writing backend logic, or analyzing
+            datasets, I enjoy being involved in the process.
+          </p>
 
-      <p class="about-cta">
-        I believe in constant learning, staying consistent, and getting better day-by-day.
-      </p>
-    </div>
+          <p>
+            I am always exploring new tools, improving my coding habits, and working on ideas that help me
+            grow into a better developer and data professional.
+          </p>
 
-    <!-- Upgraded Right Box: Analytics Tiles with icons, sparklines & progress -->
-<div class="about-right-box upgraded">
-  <div class="analytics-grid">
+          <p class="about-cta">
+            I believe in constant learning, staying consistent, and getting better day-by-day.
+          </p>
+        </div>
 
-    <div class="tile" data-progress="75">
-      <!-- Icon (inline SVG) -->
-      <div class="tile-icon" aria-hidden="true">
-        <!-- small project box icon -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="3" width="8" height="8" stroke="#000" stroke-width="1.5" fill="none"/>
-          <rect x="13" y="3" width="8" height="8" stroke="#000" stroke-width="1.5" fill="none"/>
-          <rect x="3" y="13" width="8" height="8" stroke="#000" stroke-width="1.5" fill="none"/>
-          <rect x="13" y="13" width="8" height="8" stroke="#000" stroke-width="1.5" fill="none"/>
-        </svg>
+        <!-- Upgraded Right Box: Analytics Tiles with icons, sparklines & progress -->
+        <div class="about-right-box upgraded">
+          <div class="analytics-grid">
+
+            <div class="tile" data-progress="75">
+              <div class="tile-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="3" width="8" height="8" stroke="#000" stroke-width="1.5" fill="none"/>
+                  <rect x="13" y="3" width="8" height="8" stroke="#000" stroke-width="1.5" fill="none"/>
+                  <rect x="3" y="13" width="8" height="8" stroke="#000" stroke-width="1.5" fill="none"/>
+                  <rect x="13" y="13" width="8" height="8" stroke="#000" stroke-width="1.5" fill="none"/>
+                </svg>
+              </div>
+
+              <div class="tile-value" data-target="6" id="pCount">0</div>
+              <div class="tile-label">Projects</div>
+
+              <svg class="sparkline" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <polyline points="0,14 20,8 40,12 60,6 80,10 100,4" stroke="#051" stroke-width="2" fill="none" />
+              </svg>
+
+              <div class="progress">
+                <div class="progress-fill" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="tile" data-progress="60">
+              <div class="tile-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="6" cy="6" r="3" stroke="#000" stroke-width="1.5" fill="none"/>
+                  <circle cx="18" cy="6" r="3" stroke="#000" stroke-width="1.5" fill="none"/>
+                  <circle cx="12" cy="18" r="3" stroke="#000" stroke-width="1.5" fill="none"/>
+                  <path d="M8.2 8.2L15.8 15.8" stroke="#000" stroke-width="1.3"/>
+                </svg>
+              </div>
+
+              <div class="tile-value" data-target="10" id="techCount">0</div>
+              <div class="tile-label">Technologies</div>
+
+              <svg class="sparkline" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <polyline points="0,10 20,6 40,8 60,4 80,6 100,2" stroke="#051" stroke-width="2" fill="none" />
+              </svg>
+
+              <div class="progress">
+                <div class="progress-fill" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="tile" data-progress="90">
+              <div class="tile-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 3v6" stroke="#000" stroke-width="1.5"/>
+                  <circle cx="12" cy="15" r="6" stroke="#000" stroke-width="1.5" fill="none"/>
+                </svg>
+              </div>
+
+              <div class="tile-value" data-target="200" id="qsCount">0</div>
+              <div class="tile-label">Problems Solved</div>
+
+              <svg class="sparkline" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <polyline points="0,16 20,12 40,10 60,8 80,6 100,4" stroke="#051" stroke-width="2" fill="none" />
+              </svg>
+
+              <div class="progress">
+                <div class="progress-fill" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="tile" data-progress="40">
+              <div class="tile-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="9" stroke="#000" stroke-width="1.5" fill="none"/>
+                  <path d="M12 7v6l4 2" stroke="#000" stroke-width="1.3"/>
+                </svg>
+              </div>
+
+              <div class="tile-value" data-target="1" id="yearsCount">0</div>
+              <div class="tile-label">Years Learning</div>
+
+              <svg class="sparkline" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <polyline points="0,12 20,10 40,11 60,9 80,8 100,6" stroke="#051" stroke-width="2" fill="none" />
+              </svg>
+
+              <div class="progress">
+                <div class="progress-fill" style="width:0%"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="quote-block">
+            <p class="quote">“Data is the fuel, learning is the engine.”</p>
+          </div>
+        </div>
+
+        <div class="analytics-glow"></div>
       </div>
+    </section>
 
-      <div class="tile-value" data-target="6" id="pCount">0</div>
-      <div class="tile-label">Projects</div>
+    <section id="skills" class="skills-section interactive-radial">
+      <div class="container">
+        <div class="skills-header">
+          <h2>Skills</h2>
+        </div>
 
-      <!-- sparkline -->
-      <svg class="sparkline" viewBox="0 0 100 20" preserveAspectRatio="none">
-        <polyline points="0,14 20,8 40,12 60,6 80,10 100,4" stroke="#051" stroke-width="2" fill="none" />
-      </svg>
-
-      <!-- progress bar -->
-      <div class="progress">
-        <div class="progress-fill" style="width:0%"></div>
-      </div>
-    </div>
-
-    <div class="tile" data-progress="60">
-      <div class="tile-icon">
-        <!-- tech icon -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="6" cy="6" r="3" stroke="#000" stroke-width="1.5" fill="none"/>
-          <circle cx="18" cy="6" r="3" stroke="#000" stroke-width="1.5" fill="none"/>
-          <circle cx="12" cy="18" r="3" stroke="#000" stroke-width="1.5" fill="none"/>
-          <path d="M8.2 8.2L15.8 15.8" stroke="#000" stroke-width="1.3"/>
-        </svg>
-      </div>
-
-      <div class="tile-value" data-target="10" id="techCount">0</div>
-      <div class="tile-label">Technologies</div>
-
-      <svg class="sparkline" viewBox="0 0 100 20" preserveAspectRatio="none">
-        <polyline points="0,10 20,6 40,8 60,4 80,6 100,2" stroke="#051" stroke-width="2" fill="none" />
-      </svg>
-
-      <div class="progress">
-        <div class="progress-fill" style="width:0%"></div>
-      </div>
-    </div>
-
-    <div class="tile" data-progress="90">
-      <div class="tile-icon">
-        <!-- problem icon -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 3v6" stroke="#000" stroke-width="1.5"/>
-          <circle cx="12" cy="15" r="6" stroke="#000" stroke-width="1.5" fill="none"/>
-        </svg>
-      </div>
-
-      <div class="tile-value" data-target="200" id="qsCount">0</div>
-      <div class="tile-label">Problems Solved</div>
-
-      <svg class="sparkline" viewBox="0 0 100 20" preserveAspectRatio="none">
-        <polyline points="0,16 20,12 40,10 60,8 80,6 100,4" stroke="#051" stroke-width="2" fill="none" />
-      </svg>
-
-      <div class="progress">
-        <div class="progress-fill" style="width:0%"></div>
-      </div>
-    </div>
-
-    <div class="tile" data-progress="40">
-      <div class="tile-icon">
-        <!-- time / clock icon -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="9" stroke="#000" stroke-width="1.5" fill="none"/>
-          <path d="M12 7v6l4 2" stroke="#000" stroke-width="1.3"/>
-        </svg>
-      </div>
-
-      <div class="tile-value" data-target="1" id="yearsCount">0</div>
-      <div class="tile-label">Years Learning</div>
-
-      <svg class="sparkline" viewBox="0 0 100 20" preserveAspectRatio="none">
-        <polyline points="0,12 20,10 40,11 60,9 80,8 100,6" stroke="#051" stroke-width="2" fill="none" />
-      </svg>
-
-      <div class="progress">
-        <div class="progress-fill" style="width:0%"></div>
-      </div>
-    </div>
-
+        <!-- compact responsive inner layout -->
+        <div class="skills-inner">
+          <!-- LEFT: small analytics tiles -->
+          <div class="skills-left">
+            <!-- LeetCode mini widget (GraphQL) -->
+<div class="lc-mini-widget" id="lcMini">
+  <div class="lc-mini-left">
+    <svg viewBox="0 0 64 64" class="lc-mini-donut" width="64" height="64" role="img" aria-label="Acceptance">
+      <circle class="lc-mini-ring-bg" cx="32" cy="32" r="24" fill="none" stroke-width="8"/>
+      <circle class="lc-mini-ring-fg" cx="32" cy="32" r="24" fill="none" stroke-width="8" transform="rotate(-90 32 32)"/>
+      <text class="lc-mini-percent" x="32" y="36" text-anchor="middle">—%</text>
+    </svg>
+    <div class="lc-mini-sub" id="lc-mini-sub">—</div>
   </div>
 
-  <div class="quote-block">
-    <p class="quote">“Data is the fuel, learning is the engine.”</p>
+  <div class="lc-mini-right">
+    <div class="lc-mini-row"><span class="lc-mini-label">Easy</span><span id="lc-mini-easy" class="lc-mini-num">—</span></div>
+    <div class="lc-mini-row"><span class="lc-mini-label">Medium</span><span id="lc-mini-medium" class="lc-mini-num">—</span></div>
+    <div class="lc-mini-row"><span class="lc-mini-label">Hard</span><span id="lc-mini-hard" class="lc-mini-num">—</span></div>
   </div>
 </div>
 
 
-  
+            <!-- small analytics tiles (Projects / Techs / Problems / Years) -->
+            <div class="analytics-compact">
+              <div class="small-tile" data-target="6">
+                <div class="st-icon" aria-hidden="true"><i class="fa-solid fa-diagram-project"></i></div>
+                <div class="st-value" id="st-projects">0</div>
+                <div class="st-label">Projects</div>
+                <div class="st-progress"><div class="st-progress-fill" style="width:0%"></div></div>
+              </div>
 
-  <div class="analytics-glow"></div>
-</div>
+              <div class="small-tile" data-target="10">
+                <div class="st-icon"><i class="fa-solid fa-microchip"></i></div>
+                <div class="st-value" id="st-tech">0</div>
+                <div class="st-label">Technologies</div>
+                <div class="st-progress"><div class="st-progress-fill" style="width:0%"></div></div>
+              </div>
 
+              <div class="small-tile" data-target="200">
+                <div class="st-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="st-value" id="st-qs">0</div>
+                <div class="st-label">Problems</div>
+                <div class="st-progress"><div class="st-progress-fill" style="width:0%"></div></div>
+              </div>
 
-  </div>
-</section>
-
-<section id="skills" class="skills-section interactive-radial">
-  <div class="container">
-    <div class="skills-header">
-      <h2>Skills</h2>
-    </div>
-
-    <!-- MAIN DOMAINS -->
-    <div class="radial-grid" id="radialGrid">
-
-      <!-- Web Dev -->
-      <div class="radial" data-key="web" data-percent="70" tabindex="0">
-        <div class="radial-svg">
-          <svg viewBox="0 0 100 100" class="radial-chart">
-            <circle class="radial-bg" cx="50" cy="50" r="40"></circle>
-            <circle class="radial-fg" cx="50" cy="50" r="40"></circle>
-          </svg>
-        </div>
-        <div class="radial-meta">
-          <div class="radial-value">0%</div>
-          <div class="radial-label"><i class="fa-solid fa-code"></i> Web Development</div>
-        </div>
-      </div>
-
-      <!-- Data Science -->
-      <div class="radial" data-key="datasci" data-percent="80" tabindex="0">
-        <div class="radial-svg">
-          <svg viewBox="0 0 100 100" class="radial-chart">
-            <circle class="radial-bg" cx="50" cy="50" r="40"></circle>
-            <circle class="radial-fg" cx="50" cy="50" r="40"></circle>
-          </svg>
-        </div>
-        <div class="radial-meta">
-          <div class="radial-value">0%</div>
-          <div class="radial-label"><i class="fa-solid fa-database"></i> Data Science</div>
-        </div>
-      </div>
-
-      <!-- Design -->
-      <div class="radial" data-key="design" data-percent="60" tabindex="0">
-        <div class="radial-svg">
-          <svg viewBox="0 0 100 100" class="radial-chart">
-            <circle class="radial-bg" cx="50" cy="50" r="40"></circle>
-            <circle class="radial-fg" cx="50" cy="50" r="40"></circle>
-          </svg>
-        </div>
-        <div class="radial-meta">
-          <div class="radial-value">0%</div>
-          <div class="radial-label"><i class="fa-solid fa-paintbrush"></i> Design</div>
-        </div>
-      </div>
-
-      <!-- Game Dev -->
-      <div class="radial" data-key="gamedev" data-percent="40" tabindex="0">
-        <div class="radial-svg">
-          <svg viewBox="0 0 100 100" class="radial-chart">
-            <circle class="radial-bg" cx="50" cy="50" r="40"></circle>
-            <circle class="radial-fg" cx="50" cy="50" r="40"></circle>
-          </svg>
-        </div>
-        <div class="radial-meta">
-          <div class="radial-value">0%</div>
-          <div class="radial-label"><i class="fa-solid fa-gamepad"></i> Game Dev</div>
-        </div>
-      </div>
-
-    </div>
-
-
-    <!-- DETAIL PANEL -->
-    <div class="skill-detail-panel" id="skillDetail">
-      <div class="detail-card">
-        <div class="detail-top">
-          <div class="detail-svg-wrap">
-            <svg viewBox="0 0 100 100" class="detail-radial">
-              <circle class="radial-bg" cx="50" cy="50" r="40"></circle>
-              <circle class="radial-fg" cx="50" cy="50" r="40"></circle>
-            </svg>
-            <div class="detail-percent-num">0%</div>
+              <div class="small-tile" data-target="1">
+                <div class="st-icon"><i class="fa-solid fa-hourglass-start"></i></div>
+                <div class="st-value" id="st-years">0</div>
+                <div class="st-label">Years</div>
+                <div class="st-progress"><div class="st-progress-fill" style="width:0%"></div></div>
+              </div>
+            </div>
           </div>
 
-          <div class="detail-text">
-            <h3 class="detail-title">Skill Domain</h3>
-            <p class="detail-desc">Click a skill to see tools.</p>
+          <!-- RIGHT: radials grid -->
+          <div class="skills-right">
+            <div class="radial-grid compact" id="radialGrid">
+              <!-- repeat radial items (smaller) -->
+              <div class="radial" data-key="web" data-percent="70" tabindex="0">
+                <div class="radial-svg">
+                  <svg viewBox="0 0 100 100" class="radial-chart compact">
+                    <circle class="radial-bg" cx="50" cy="50" r="36"></circle>
+                    <circle class="radial-fg" cx="50" cy="50" r="36"></circle>
+                  </svg>
+                </div>
+                <div class="radial-meta">
+                  <div class="radial-value">70%</div>
+                  <div class="radial-label"><i class="fa-solid fa-code"></i> Web</div>
+                </div>
+              </div>
+
+              <div class="radial" data-key="datasci" data-percent="80" tabindex="0">
+                <div class="radial-svg">
+                  <svg viewBox="0 0 100 100" class="radial-chart compact">
+                    <circle class="radial-bg" cx="50" cy="50" r="36"></circle>
+                    <circle class="radial-fg" cx="50" cy="50" r="36"></circle>
+                  </svg>
+                </div>
+                <div class="radial-meta">
+                  <div class="radial-value">80%</div>
+                  <div class="radial-label"><i class="fa-solid fa-database"></i> Data</div>
+                </div>
+              </div>
+
+              <div class="radial" data-key="design" data-percent="60" tabindex="0">
+                <div class="radial-svg">
+                  <svg viewBox="0 0 100 100" class="radial-chart compact">
+                    <circle class="radial-bg" cx="50" cy="50" r="36"></circle>
+                    <circle class="radial-fg" cx="50" cy="50" r="36"></circle>
+                  </svg>
+                </div>
+                <div class="radial-meta">
+                  <div class="radial-value">60%</div>
+                  <div class="radial-label"><i class="fa-solid fa-paintbrush"></i> Design</div>
+                </div>
+              </div>
+
+              <div class="radial" data-key="gamedev" data-percent="40" tabindex="0">
+                <div class="radial-svg">
+                  <svg viewBox="0 0 100 100" class="radial-chart compact">
+                    <circle class="radial-bg" cx="50" cy="50" r="36"></circle>
+                    <circle class="radial-fg" cx="50" cy="50" r="36"></circle>
+                  </svg>
+                </div>
+                <div class="radial-meta">
+                  <div class="radial-value">40%</div>
+                  <div class="radial-label"><i class="fa-solid fa-gamepad"></i> Game</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="detail-tools">
-          <h4>Tools & Topics</h4>
-          <ul class="tools-list"></ul>
+        <!-- full width detail card (unchanged but smaller) -->
+        <div class="skill-detail-panel" id="skillDetail">
+          <div class="detail-card compact">
+            <div class="detail-top">
+              <div class="detail-svg-wrap compact">
+                <svg viewBox="0 0 100 100" class="detail-radial compact">
+                  <circle class="radial-bg" cx="50" cy="50" r="36"></circle>
+                  <circle class="radial-fg" cx="50" cy="50" r="36"></circle>
+                </svg>
+                <div class="detail-percent-num">0%</div>
+              </div>
+
+              <div class="detail-text">
+                <h3 class="detail-title">Skill Domain</h3>
+                <p class="detail-desc">Click a skill to see tools.</p>
+              </div>
+            </div>
+
+            <div class="detail-tools">
+              <h4>Tools & Topics</h4>
+              <ul class="tools-list compact">
+                <li>HTML & CSS</li>
+                <li>JavaScript</li>
+                <li>Python</li>
+                <li>NumPy / Pandas</li>
+                <li>Data Visualization</li>
+                <li>SQL basics</li>
+              </ul>
+            </div>
+          </div>
         </div>
+
       </div>
-    </div>
+    </section>
 
-  </div>
-</section>
+    <section id="projects">
+      <h1>projects</h1>
+    </section>
 
+    <section id="contact">
+      <h1>Contact Me</h1>
+      <p>Your contact details...</p>
+    </section>
 
-<section id="projects">
-    <h1>projects</h1>
-    <p>Your projects content here...</p>
-</section>
-
-<section id="contact">
-    <h1>Contact Me</h1>
-    <p>Your contact details...</p>
-</section>
-
-    
     <script src="script.js"></script>
   </body>
 </html>

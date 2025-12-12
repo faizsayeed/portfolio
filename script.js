@@ -10,15 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let current = roles[roleIndex];
 
     if (!deleting) {
-      // typing effect
       el.textContent = current.substring(0, charIndex++);
       if (charIndex > current.length) {
         deleting = true;
-        setTimeout(type, 1000); // pause before deleting
+        setTimeout(type, 1000);
         return;
       }
     } else {
-      // deleting effect
       el.textContent = current.substring(0, charIndex--);
       if (charIndex < 0) {
         deleting = false;
@@ -26,12 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    setTimeout(type, deleting ? 60 : 100); // speed
+    setTimeout(type, deleting ? 60 : 100);
   }
 
   type();
 });
-
 
 // Reveal About section animation on scroll
 document.addEventListener("DOMContentLoaded", () => {
@@ -68,30 +65,24 @@ function animateCounter(id) {
 }
 
 // Sticky-on-scroll navbar (append to script.js)
-// - adds .fixed to .navbar when page scroll passes the navbar position
-// - inserts a placeholder element with matching height to avoid layout jump
-
 (function () {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
 
-  // create placeholder directly after navbar
   const placeholder = document.createElement('div');
   placeholder.className = 'navbar-placeholder';
   navbar.parentNode.insertBefore(placeholder, navbar.nextSibling);
 
-  // compute initial offset and height
   let navOffsetTop = navbar.getBoundingClientRect().top + window.scrollY;
   let navHeight = navbar.offsetHeight;
   placeholder.style.height = navHeight + 'px';
-  placeholder.style.display = 'none'; // keep hidden initially
+  placeholder.style.display = 'none';
   placeholder.style.pointerEvents = 'none';
 
-  // store navbar height as CSS variable so CSS can use it
   document.documentElement.style.setProperty('--navbar-height', navHeight + 'px');
 
   function onScroll() {
-    if (window.scrollY >= navOffsetTop + 5) { // +5 for tiny tolerance
+    if (window.scrollY >= navOffsetTop + 5) {
       if (!navbar.classList.contains('fixed')) {
         navbar.classList.add('fixed');
         placeholder.classList.add('active');
@@ -104,7 +95,6 @@ function animateCounter(id) {
     }
   }
 
-  // update offsets on resize (important for responsive)
   function onResize() {
     navOffsetTop = navbar.getBoundingClientRect().top + window.scrollY;
     navHeight = navbar.offsetHeight;
@@ -114,7 +104,6 @@ function animateCounter(id) {
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize);
-  // run once to set initial state
   onScroll();
 })();
 
@@ -131,8 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(document.querySelector(".about-right-box"));
 });
 
-
-// --------- Animated count-up, sparkline draw, and progress fill ----------
+// Animated count-up, sparkline draw, and progress fill
 function animateCountById(el, target, duration = 1100) {
   const start = 0;
   const end = parseInt(target, 10);
@@ -158,14 +146,12 @@ function revealAndAnimateRightBox() {
   if (!box) return;
   const rect = box.getBoundingClientRect();
   if (rect.top < window.innerHeight - 80) {
-    // animate tiles
     const tiles = box.querySelectorAll('.tile');
     tiles.forEach(tile => {
       const valueEl = tile.querySelector('.tile-value');
       const target = valueEl.dataset.target;
       animateCountById(valueEl, target, 1000);
 
-      // sparkline animation
       const poly = tile.querySelector('.sparkline polyline');
       if (poly) {
         const total = poly.getTotalLength();
@@ -176,7 +162,6 @@ function revealAndAnimateRightBox() {
         }, 200);
       }
 
-      // progress bar
       const bar = tile.querySelector('.progress-fill');
       if (bar) {
         const pct = tile.dataset.progress || 60;
@@ -198,37 +183,35 @@ document.addEventListener('DOMContentLoaded', () => {
 // Interactive behavior for the radial + bars skills (click -> detail)
 (function () {
   const SKILLS = {
-  web: {
-    title: "Web Development",
-    percent: 70,
-    desc: "Frontend and backend development with modern tools.",
-    tools: ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB", "Git"]
-  },
+    web: {
+      title: "Web Development",
+      percent: 70,
+      desc: "Frontend and backend development with modern tools.",
+      tools: ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB", "Git"]
+    },
 
-  datasci: {
-    title: "Data Science",
-    percent: 80,
-    desc: "Data analysis, data cleaning, EDA, and machine learning basics.",
-    tools: ["Python", "Pandas", "NumPy", "SQL", "Power BI", "ML Basics", "Data Wrangling"]
-  },
+    datasci: {
+      title: "Data Science",
+      percent: 80,
+      desc: "Data analysis, data cleaning, EDA, and machine learning basics.",
+      tools: ["Python", "Pandas", "NumPy", "SQL", "Power BI", "ML Basics", "Data Wrangling"]
+    },
 
-  design: {
-    title: "Design & UI",
-    percent: 60,
-    desc: "Visual design fundamentals and modern UI workflows.",
-    tools: ["Canva", "Figma Basics", "Color Theory", "Logo Design", "UI Layouts"]
-  },
+    design: {
+      title: "Design & UI",
+      percent: 60,
+      desc: "Visual design fundamentals and modern UI workflows.",
+      tools: ["Canva", "Figma Basics", "Color Theory", "Logo Design", "UI Layouts"]
+    },
 
-  gamedev: {
-    title: "Game Development",
-    percent: 40,
-    desc: "Creating simple games and understanding game engines.",
-    tools: ["Unity", "C# Basics", "Sprite Animation", "Game UI", "Game Physics Basics"]
-  }
-};
+    gamedev: {
+      title: "Game Development",
+      percent: 40,
+      desc: "Creating simple games and understanding game engines.",
+      tools: ["Unity", "C# Basics", "Sprite Animation", "Game UI", "Game Physics Basics"]
+    }
+  };
 
-
-  // helpers
   const radials = document.querySelectorAll('.radial');
   const bars = document.querySelectorAll('.bar-row');
   const detailCard = document.getElementById('skillDetail');
@@ -238,15 +221,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const detailPercentNum = detailCard.querySelector('.detail-percent-num');
   const detailFg = detailCard.querySelector('.detail-radial .radial-fg');
 
-  // initialize radial SVG stroke lengths for all charts
   function prepareRadials() {
     document.querySelectorAll('.radial-chart .radial-fg').forEach(circle => {
       const r = circle.getAttribute('r') || 40;
       const circumference = 2 * Math.PI * r;
       circle.style.strokeDasharray = `${circumference} ${circumference}`;
-      circle.style.strokeDashoffset = circumference; // hidden initially
+      circle.style.strokeDashoffset = circumference;
     });
-    // detail radial too
     if (detailFg) {
       const r = detailFg.getAttribute('r') || 40;
       const circumference = 2 * Math.PI * r;
@@ -255,45 +236,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // animate radial fill and percent inside an element
   function animateRadialAndNumber(circleEl, numberEl, percent, duration = 1200) {
-  const r = circleEl.getAttribute('r') || 40;
-  const circumference = 2 * Math.PI * r;
+    const r = circleEl.getAttribute('r') || 40;
+    const circumference = 2 * Math.PI * r;
 
-  // setup
-  circleEl.style.strokeDasharray = `${circumference} ${circumference}`;
-  circleEl.style.strokeDashoffset = circumference;
+    circleEl.style.strokeDasharray = `${circumference} ${circumference}`;
+    circleEl.style.strokeDashoffset = circumference;
 
-  // stroke animation
-  requestAnimationFrame(() => {
-    circleEl.style.transition = `stroke-dashoffset ${duration}ms cubic-bezier(.2,.9,.2,1)`;
-    const offset = circumference - (percent / 100) * circumference;
-    circleEl.style.strokeDashoffset = offset;
-  });
+    requestAnimationFrame(() => {
+      circleEl.style.transition = `stroke-dashoffset ${duration}ms cubic-bezier(.2,.9,.2,1)`;
+      const offset = circumference - (percent / 100) * circumference;
+      circleEl.style.strokeDashoffset = offset;
+    });
 
-  // number animation
-  const start = 0;
-  const end = percent;
-  const startTime = performance.now();
+    const start = 0;
+    const end = percent;
+    const startTime = performance.now();
 
-  function update(now) {
-    const t = Math.min((now - startTime) / duration, 1);
-    const eased = 1 - Math.pow(1 - t, 3);
-    const cur = Math.floor(start + (end - start) * eased);
-    numberEl.textContent = cur + "%";
-    if (t < 1) requestAnimationFrame(update);
+    function update(now) {
+      const t = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const cur = Math.floor(start + (end - start) * eased);
+      numberEl.textContent = cur + "%";
+      if (t < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
   }
-  requestAnimationFrame(update);
-}
 
-
-  // animate bar fill and value
   function animateBarFill(barRow, percent) {
     const fill = barRow.querySelector('.bar-fill');
     const val = barRow.querySelector('.bar-value');
     if (!fill) return;
     setTimeout(() => fill.style.width = percent + '%', 80);
-    // numeric animation
     const start = 0;
     const dur = 900;
     const s = performance.now();
@@ -305,20 +279,16 @@ document.addEventListener('DOMContentLoaded', () => {
     })(performance.now());
   }
 
-  // when a skill is selected (key: excel/sql/...)
   function selectSkill(key) {
     if (!SKILLS[key]) return;
     const data = SKILLS[key];
 
-    // mark active states
     radials.forEach(r => r.classList.toggle('active', r.dataset.key === key));
     bars.forEach(b => b.classList.toggle('active', b.dataset.key === key));
 
-    // update detail texts
     detailTitle.textContent = data.title;
     detailDesc.textContent = data.desc;
 
-    // populate tools
     toolsList.innerHTML = '';
     data.tools.forEach(t => {
       const li = document.createElement('li');
@@ -326,32 +296,25 @@ document.addEventListener('DOMContentLoaded', () => {
       toolsList.appendChild(li);
     });
 
-    // animate detail radial + number
     const detailCircle = detailCard.querySelector('.detail-radial .radial-fg');
     animateRadialAndNumber(detailCircle, detailPercentNum, data.percent, 1000);
 
-    // scroll detail into view a bit on mobile if needed
     detailCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  // click/keyboard handlers
   function attachHandlers() {
-    // radials
     radials.forEach(r => {
       r.addEventListener('click', () => {
         const key = r.dataset.key;
         const percent = parseInt(r.dataset.percent,10) || 0;
-        // animate that radial's own chart too
         const circle = r.querySelector('.radial-fg');
         const numberEl = r.querySelector('.radial-value');
         animateRadialAndNumber(circle, numberEl, percent, 900);
-        // also set detail panel
         selectSkill(key);
       });
       r.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); r.click(); } });
     });
 
-    // bars
     bars.forEach(b => {
       b.addEventListener('click', () => {
         const key = b.dataset.key;
@@ -363,66 +326,310 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // on scroll: when section appears, animate all radials & bars softly
- // === Animate all skills fully when section first enters view ===
-function animateOnView() {
-  const section = document.querySelector('.interactive-radial');
-  if (!section) return;
+  function animateOnView() {
+    const section = document.querySelector('.interactive-radial');
+    if (!section) return;
 
-  const rect = section.getBoundingClientRect();
-  if (rect.top < window.innerHeight - 100) {
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
 
-    // Animate radial circles 0 → full %
-    document.querySelectorAll('.radial').forEach(r => {
-      if (r.classList.contains('animated')) return; // only once
+      document.querySelectorAll('.radial').forEach(r => {
+        if (r.classList.contains('animated')) return;
+        const percent = parseInt(r.dataset.percent, 10) || 0;
+        const circle = r.querySelector('.radial-fg');
+        const numberEl = r.querySelector('.radial-value');
+        animateRadialAndNumber(circle, numberEl, percent, 1200);
+        r.classList.add('animated');
+      });
 
-      const percent = parseInt(r.dataset.percent, 10) || 0;
-      const circle = r.querySelector('.radial-fg');
-      const numberEl = r.querySelector('.radial-value');
+      document.querySelectorAll('.bar-row').forEach(b => {
+        if (b.classList.contains('animated')) return;
+        const pct = parseInt(b.dataset.percent, 10) || 0;
+        const fill = b.querySelector('.bar-fill');
+        const val = b.querySelector('.bar-value');
+        fill.style.width = '0%';
+        setTimeout(() => fill.style.width = pct + '%', 80);
 
-      animateRadialAndNumber(circle, numberEl, percent, 1200);
-      r.classList.add('animated');
-    });
+        let start = 0;
+        let duration = 1000;
+        const s = performance.now();
+        (function tick(now) {
+          const t = Math.min((now - s) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          const cur = Math.floor(eased * pct);
+          val.textContent = cur + "%";
+          if (t < 1) requestAnimationFrame(tick);
+        })(performance.now());
 
-    // Animate bars 0 → full %
-    document.querySelectorAll('.bar-row').forEach(b => {
-      if (b.classList.contains('animated')) return;
+        b.classList.add('animated');
+      });
 
-      const pct = parseInt(b.dataset.percent, 10) || 0;
-      const fill = b.querySelector('.bar-fill');
-      const val = b.querySelector('.bar-value');
+      const first = document.querySelector('.radial')?.dataset.key;
+      if (first) selectSkill(first);
 
-      fill.style.width = '0%';
-      setTimeout(() => fill.style.width = pct + '%', 80);
-
-      // number animation
-      let start = 0;
-      let duration = 1000;
-      const s = performance.now();
-      (function tick(now) {
-        const t = Math.min((now - s) / duration, 1);
-        const eased = 1 - Math.pow(1 - t, 3);
-        const cur = Math.floor(eased * pct);
-        val.textContent = cur + "%";
-        if (t < 1) requestAnimationFrame(tick);
-      })(performance.now());
-
-      b.classList.add('animated');
-    });
-
-    // Preload detail panel with the first skill (no animation)
-    const first = document.querySelector('.radial')?.dataset.key;
-    if (first) selectSkill(first);
-
-    window.removeEventListener('scroll', animateOnView);
+      window.removeEventListener('scroll', animateOnView);
+    }
   }
-}
 
-
-  // initialize
   prepareRadials();
   attachHandlers();
   document.addEventListener('DOMContentLoaded', animateOnView);
   window.addEventListener('scroll', animateOnView, { passive: true });
 })();
 
+// Compact skills initializer: animate small tiles, radials & detail
+(function(){
+  const tiles = Array.from(document.querySelectorAll('.small-tile'));
+  tiles.forEach(tile=>{
+    const target = Number(tile.dataset.target) || 0;
+    const valueEl = tile.querySelector('.st-value');
+    const fill = tile.querySelector('.st-progress-fill');
+    let cur = 0;
+    const step = Math.max(1, Math.floor(target / 30));
+    const intId = setInterval(()=>{
+      cur += step;
+      if(cur >= target){ cur = target; clearInterval(intId); }
+      valueEl.textContent = cur;
+      if(fill) fill.style.width = `${Math.min(100, (cur/target)*100 || 0)}%`;
+    }, 18);
+  });
+
+  const radials = Array.from(document.querySelectorAll('.radial'));
+  radials.forEach(r=>{
+    const svgFg = r.querySelector('.radial-fg');
+    const percent = Number(r.dataset.percent) || 0;
+    const rRadius = 36;
+    const circumference = 2 * Math.PI * rRadius;
+    const draw = (Math.max(0, Math.min(100, percent)) / 100) * circumference;
+    if(svgFg){
+      svgFg.setAttribute('stroke-dasharray', `${draw} ${Math.max(0, circumference - draw)}`);
+      svgFg.setAttribute('stroke-width', '8');
+      svgFg.setAttribute('stroke', '#0a8b3f');
+    }
+    const valEl = r.querySelector('.radial-value');
+    if(valEl) valEl.textContent = `${percent}%`;
+  });
+
+  document.querySelectorAll('.radial').forEach(rad=>{
+    rad.addEventListener('click', ()=>{
+      const label = rad.querySelector('.radial-label')?.innerText || 'Skill';
+      const pct = rad.dataset.percent || '0';
+      document.querySelector('.detail-title').innerText = label;
+      document.querySelector('.detail-percent-num').innerText = pct + '%';
+      const mapping = {
+        web: ['HTML','CSS','JS','React','Node'],
+        datasci: ['Python','Pandas','NumPy','Matplotlib','SQL'],
+        design: ['Figma','Photoshop','Illustrator','UI/UX'],
+        gamedev: ['C++','Unity','Godot','Shaders']
+      };
+      const key = rad.dataset.key || rad.getAttribute('data-key');
+      const tools = mapping[key] || ['Problem solving','Algorithms'];
+      const list = document.querySelector('.tools-list');
+      if(list){
+        list.innerHTML = '';
+        tools.forEach(t=>{
+          const li = document.createElement('li');
+          li.textContent = t;
+          list.appendChild(li);
+        });
+      }
+      const detail = document.getElementById('skillDetail');
+      if(detail) detail.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  });
+
+  window.addEventListener('load', ()=>{ /* left intentionally blank (no LeetCode mirroring) */ });
+})();
+
+// Robust LeetCode mini widget with fallback & session caching
+(function(){
+  const USERNAME = 'ShaikMohdFaizSayeed'; // your username (case-sensitive)
+  const DIRECT_ENDPOINT = 'https://leetcode.com/graphql';
+ const PROXY_URL = "https://bold-resonance-1a80.faizsayeed16556.workers.dev/";
+ // <-- set to 'https://your-proxy.example/' after you deploy a proxy, or null to skip
+
+  const easyEl = document.getElementById('lc-mini-easy');
+  const medEl  = document.getElementById('lc-mini-medium');
+  const hardEl = document.getElementById('lc-mini-hard');
+  const subEl  = document.getElementById('lc-mini-sub');
+  const percentText = document.querySelector('.lc-mini-percent');
+  const ring = document.querySelector('.lc-mini-ring-fg');
+
+  if(!easyEl) return; // widget not present
+
+  function fmt(n){ return n == null ? '—' : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  const query = `
+    query userStats($username: String!) {
+      allQuestionsCount { difficulty count }
+      matchedUser(username: $username) {
+        username
+        submitStatsGlobal { acSubmissionNum { difficulty count submissions } }
+      }
+    }
+  `;
+
+  // Small helper to do a POST and return json or throw
+  async function postJson(url, body, opts = {}) {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {}),
+      body: JSON.stringify(body),
+      mode: opts.mode || 'cors',
+      cache: 'no-cache'
+    });
+
+    // If non-JSON text returned, still attempt to parse as text for debugging
+    const text = await res.text();
+    try {
+      const json = JSON.parse(text);
+      if (!res.ok) throw new Error(`HTTP ${res.status} — ${text}`);
+      return json;
+    } catch (e) {
+      // text was not JSON or res not ok
+      if (!res.ok) throw new Error(`HTTP ${res.status} — ${text}`);
+      // if res.ok but JSON.parse failed, try returning text as fallback
+      throw new Error('Invalid JSON response: ' + text);
+    }
+  }
+
+  // Set donut UI
+  function setDonut(percent){
+    if(!ring) return;
+    const r = 24;
+    const circumference = 2 * Math.PI * r;
+    const pct = Math.max(0, Math.min(100, Number(percent) || 0));
+    const draw = (pct/100) * circumference;
+    ring.style.strokeDasharray = `${draw} ${Math.max(0, circumference - draw)}`;
+    if(percentText) percentText.textContent = `${pct}%`;
+  }
+
+  // Render safe fallback UI
+  function showUnavailable(msg = 'Profile unavailable') {
+    easyEl.textContent = medEl.textContent = hardEl.textContent = '—';
+    if(subEl) subEl.textContent = msg;
+    setDonut(0);
+    if(percentText) percentText.textContent = '—%';
+  }
+
+  // Parse response and fill widget
+  function fillFromGraphQL(data) {
+    const allQ = data?.data?.allQuestionsCount ?? [];
+    const matched = data?.data?.matchedUser ?? null;
+
+    let totalProblems = 0;
+    allQ.forEach(item => { totalProblems += Number(item.count || 0); });
+
+    const acList = matched?.submitStatsGlobal?.acSubmissionNum ?? [];
+    let easy = 0, medium = 0, hard = 0, totalSolved = 0;
+    acList.forEach(it => {
+      const d = String(it.difficulty || '').toLowerCase();
+      const c = Number(it.count || 0);
+      if(d.includes('easy')) easy = c;
+      else if(d.includes('medium')) medium = c;
+      else if(d.includes('hard')) hard = c;
+      else if(d === 'all') totalSolved = c;
+    });
+    if(!totalSolved) totalSolved = easy + medium + hard;
+
+    easyEl.textContent = fmt(easy);
+    medEl.textContent  = fmt(medium);
+    hardEl.textContent = fmt(hard);
+    subEl.textContent  = totalSolved > 0 ? `${fmt(totalSolved)} solved` : '—';
+
+    let pct = 0;
+    if(totalProblems > 0) pct = Math.round((totalSolved / totalProblems) * 10000) / 100;
+    setDonut(pct);
+  }
+
+  // Try direct endpoint, with one retry, then fallback to proxy (if provided)
+  async function loadWithFallback() {
+    const body = { query, variables: { username: USERNAME } };
+
+    // If session flag indicates direct failed previously, skip direct and use proxy
+    const directPreviouslyFailed = sessionStorage.getItem('lc_direct_failed') === '1';
+
+    // Helper to attempt direct fetch
+    async function tryDirect() {
+      try {
+        const json = await postJson(DIRECT_ENDPOINT, body, { mode: 'cors' });
+        return json;
+      } catch (err) {
+        // Common CORS failures manifest as TypeError: Failed to fetch (caught earlier by postJson wrapper)
+        console.warn('Direct LeetCode fetch failed:', err);
+        throw err;
+      }
+    }
+
+    // Helper to attempt proxy fetch
+    async function tryProxy(proxyUrl) {
+      if(!proxyUrl) throw new Error('No proxy configured');
+      try {
+        // Our proxy expects the same POST body and forwards to LeetCode
+        const json = await postJson(proxyUrl, body, { mode: 'cors' });
+        return json;
+      } catch (err) {
+        console.warn('Proxy fetch failed:', err);
+        throw err;
+      }
+    }
+
+    // Attempt flow
+    try {
+      let data = null;
+      if(!directPreviouslyFailed) {
+        // Try direct once
+        try {
+          data = await tryDirect();
+        } catch (errDirect) {
+          // direct failed; set flag so refresh uses proxy
+          sessionStorage.setItem('lc_direct_failed', '1');
+          // small delay then try direct once more (some transient cases)
+          await new Promise(r => setTimeout(r, 450));
+          try {
+            data = await tryDirect();
+            // success: clear flag
+            sessionStorage.removeItem('lc_direct_failed');
+          } catch (err2) {
+            // still failing — proceed to proxy attempt
+            console.warn('Direct fetch retried and failed, will try proxy if available.');
+            throw err2;
+          }
+        }
+      } else {
+        // direct previously failed: try proxy immediately (skip direct)
+        throw new Error('Direct previously failed — skipping to proxy');
+      }
+
+      // If we have data from direct, render it
+      if(data) { fillFromGraphQL(data); return; }
+    } catch (directErr) {
+      // Try proxy fallback
+      if(PROXY_URL) {
+        try {
+          const pdata = await tryProxy(PROXY_URL);
+          // proxy succeeded — clear direct-failed flag so future tabs can try direct again
+          sessionStorage.removeItem('lc_direct_failed');
+          if(pdata) { fillFromGraphQL(pdata); return; }
+        } catch (proxyErr) {
+          console.error('Both direct and proxy failed:', proxyErr);
+          showUnavailable('Profile unavailable');
+          return;
+        }
+      } else {
+        // no proxy provided — show friendly message and keep flag set
+        console.warn('No proxy configured and direct fetch failed. Set PROXY_URL to use a proxy.');
+        showUnavailable('Profile unavailable (CORS)');
+        return;
+      }
+    }
+  }
+
+  // Run loader when DOM ready
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', loadWithFallback);
+  } else {
+    loadWithFallback();
+  }
+
+})();
