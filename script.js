@@ -1,3 +1,9 @@
+// Use the proxy worker to avoid CORS from browsers.
+// Make the deployed site prefer the proxy; only try direct when running locally.
+const IS_LOCAL = (location.hostname === '127.0.0.1' || location.hostname === 'localhost');
+const PROXY_URL = "https://bold-resonance-1a80.faizsayeed16556.workers.dev/";
+const USE_PROXY_ALWAYS = !IS_LOCAL;
+
 document.addEventListener("DOMContentLoaded", () => {
   const roles = ["Data Analyst", "Web Developer", "Programmer", "Designer"];
   const el = document.getElementById("typewriter");
@@ -64,7 +70,7 @@ function animateCounter(id) {
   update();
 }
 
-// Sticky-on-scroll navbar (append to script.js)
+// Sticky-on-scroll navbar
 (function () {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
@@ -180,7 +186,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', revealAndAnimateRightBox);
 });
 
-// Interactive behavior for the radial + bars skills (click -> detail)
+// =======================
+// SKILLS SECTION (FULL)
+// =======================
 (function () {
   const SKILLS = {
     web: {
@@ -189,21 +197,18 @@ document.addEventListener('DOMContentLoaded', () => {
       desc: "Frontend and backend development with modern tools.",
       tools: ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB", "Git"]
     },
-
     datasci: {
       title: "Data Science",
       percent: 80,
       desc: "Data analysis, data cleaning, EDA, and machine learning basics.",
       tools: ["Python", "Pandas", "NumPy", "SQL", "Power BI", "ML Basics", "Data Wrangling"]
     },
-
     design: {
       title: "Design & UI",
       percent: 60,
       desc: "Visual design fundamentals and modern UI workflows.",
       tools: ["Canva", "Figma Basics", "Color Theory", "Logo Design", "UI Layouts"]
     },
-
     gamedev: {
       title: "Game Development",
       percent: 40,
@@ -312,7 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
         animateRadialAndNumber(circle, numberEl, percent, 900);
         selectSkill(key);
       });
-      r.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); r.click(); } });
     });
 
     bars.forEach(b => {
@@ -322,7 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
         animateBarFill(b, percent);
         selectSkill(key);
       });
-      b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); b.click(); } });
     });
   }
 
@@ -350,14 +353,12 @@ document.addEventListener('DOMContentLoaded', () => {
         fill.style.width = '0%';
         setTimeout(() => fill.style.width = pct + '%', 80);
 
-        let start = 0;
         let duration = 1000;
         const s = performance.now();
         (function tick(now) {
           const t = Math.min((now - s) / duration, 1);
           const eased = 1 - Math.pow(1 - t, 3);
-          const cur = Math.floor(eased * pct);
-          val.textContent = cur + "%";
+          val.textContent = Math.floor(eased * pct) + "%";
           if (t < 1) requestAnimationFrame(tick);
         })(performance.now());
 
@@ -377,76 +378,12 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', animateOnView, { passive: true });
 })();
 
-// Compact skills initializer: animate small tiles, radials & detail
-(function(){
-  const tiles = Array.from(document.querySelectorAll('.small-tile'));
-  tiles.forEach(tile=>{
-    const target = Number(tile.dataset.target) || 0;
-    const valueEl = tile.querySelector('.st-value');
-    const fill = tile.querySelector('.st-progress-fill');
-    let cur = 0;
-    const step = Math.max(1, Math.floor(target / 30));
-    const intId = setInterval(()=>{
-      cur += step;
-      if(cur >= target){ cur = target; clearInterval(intId); }
-      valueEl.textContent = cur;
-      if(fill) fill.style.width = `${Math.min(100, (cur/target)*100 || 0)}%`;
-    }, 18);
-  });
-
-  const radials = Array.from(document.querySelectorAll('.radial'));
-  radials.forEach(r=>{
-    const svgFg = r.querySelector('.radial-fg');
-    const percent = Number(r.dataset.percent) || 0;
-    const rRadius = 36;
-    const circumference = 2 * Math.PI * rRadius;
-    const draw = (Math.max(0, Math.min(100, percent)) / 100) * circumference;
-    if(svgFg){
-      svgFg.setAttribute('stroke-dasharray', `${draw} ${Math.max(0, circumference - draw)}`);
-      svgFg.setAttribute('stroke-width', '8');
-      svgFg.setAttribute('stroke', '#0a8b3f');
-    }
-    const valEl = r.querySelector('.radial-value');
-    if(valEl) valEl.textContent = `${percent}%`;
-  });
-
-  document.querySelectorAll('.radial').forEach(rad=>{
-    rad.addEventListener('click', ()=>{
-      const label = rad.querySelector('.radial-label')?.innerText || 'Skill';
-      const pct = rad.dataset.percent || '0';
-      document.querySelector('.detail-title').innerText = label;
-      document.querySelector('.detail-percent-num').innerText = pct + '%';
-      const mapping = {
-        web: ['HTML','CSS','JS','React','Node'],
-        datasci: ['Python','Pandas','NumPy','Matplotlib','SQL'],
-        design: ['Figma','Photoshop','Illustrator','UI/UX'],
-        gamedev: ['C++','Unity','Godot','Shaders']
-      };
-      const key = rad.dataset.key || rad.getAttribute('data-key');
-      const tools = mapping[key] || ['Problem solving','Algorithms'];
-      const list = document.querySelector('.tools-list');
-      if(list){
-        list.innerHTML = '';
-        tools.forEach(t=>{
-          const li = document.createElement('li');
-          li.textContent = t;
-          list.appendChild(li);
-        });
-      }
-      const detail = document.getElementById('skillDetail');
-      if(detail) detail.scrollIntoView({behavior:'smooth', block:'center'});
-    });
-  });
-
-  window.addEventListener('load', ()=>{ /* left intentionally blank (no LeetCode mirroring) */ });
-})();
-
-// Robust LeetCode mini widget with fallback & session caching
-(function(){
-  const USERNAME = 'ShaikMohdFaizSayeed'; // your username (case-sensitive)
-  const DIRECT_ENDPOINT = 'https://leetcode.com/graphql';
- const PROXY_URL = "https://bold-resonance-1a80.faizsayeed16556.workers.dev/";
- // <-- set to 'https://your-proxy.example/' after you deploy a proxy, or null to skip
+// ============================================================
+// ROBUST LEETCODE MINI WIDGET (FIXED — ASYNC SAFE)
+// ============================================================
+(function () {
+  const USERNAME = 'ShaikMohdFaizSayeed'; // case-sensitive
+  const PROXY_URL = "https://bold-resonance-1a80.faizsayeed16556.workers.dev/";
 
   const easyEl = document.getElementById('lc-mini-easy');
   const medEl  = document.getElementById('lc-mini-medium');
@@ -455,194 +392,87 @@ document.addEventListener('DOMContentLoaded', () => {
   const percentText = document.querySelector('.lc-mini-percent');
   const ring = document.querySelector('.lc-mini-ring-fg');
 
-  if(!easyEl) return; // widget not present
-
-  function fmt(n){ return n == null ? '—' : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  if (!easyEl) return; // widget not present
 
   const query = `
     query userStats($username: String!) {
       allQuestionsCount { difficulty count }
       matchedUser(username: $username) {
-        username
-        submitStatsGlobal { acSubmissionNum { difficulty count submissions } }
+        submitStatsGlobal {
+          acSubmissionNum {
+            difficulty
+            count
+          }
+        }
       }
     }
   `;
 
-  // Small helper to do a POST and return json or throw
-  async function postJson(url, body, opts = {}) {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {}),
-      body: JSON.stringify(body),
-      mode: opts.mode || 'cors',
-      cache: 'no-cache'
-    });
-
-    // If non-JSON text returned, still attempt to parse as text for debugging
-    const text = await res.text();
-    try {
-      const json = JSON.parse(text);
-      if (!res.ok) throw new Error(`HTTP ${res.status} — ${text}`);
-      return json;
-    } catch (e) {
-      // text was not JSON or res not ok
-      if (!res.ok) throw new Error(`HTTP ${res.status} — ${text}`);
-      // if res.ok but JSON.parse failed, try returning text as fallback
-      throw new Error('Invalid JSON response: ' + text);
-    }
-  }
-
-  // Set donut UI
-  function setDonut(percent){
-    if(!ring) return;
+  function setDonut(percent) {
+    if (!ring) return;
     const r = 24;
     const circumference = 2 * Math.PI * r;
-    const pct = Math.max(0, Math.min(100, Number(percent) || 0));
-    const draw = (pct/100) * circumference;
-    ring.style.strokeDasharray = `${draw} ${Math.max(0, circumference - draw)}`;
-    if(percentText) percentText.textContent = `${pct}%`;
+    const pct = Math.max(0, Math.min(100, percent));
+    const draw = (pct / 100) * circumference;
+    ring.style.strokeDasharray = `${draw} ${circumference - draw}`;
+    if (percentText) percentText.textContent = pct + "%";
   }
 
-  // Render safe fallback UI
-  function showUnavailable(msg = 'Profile unavailable') {
-    easyEl.textContent = medEl.textContent = hardEl.textContent = '—';
-    if(subEl) subEl.textContent = msg;
+  function showUnavailable(msg = 'Unavailable') {
+    easyEl.textContent = '—';
+    medEl.textContent = '—';
+    hardEl.textContent = '—';
+    subEl.textContent = msg;
     setDonut(0);
-    if(percentText) percentText.textContent = '—%';
   }
 
-  // Parse response and fill widget
-  function fillFromGraphQL(data) {
-    const allQ = data?.data?.allQuestionsCount ?? [];
-    const matched = data?.data?.matchedUser ?? null;
-
-    let totalProblems = 0;
-    allQ.forEach(item => { totalProblems += Number(item.count || 0); });
-
-    const acList = matched?.submitStatsGlobal?.acSubmissionNum ?? [];
-    let easy = 0, medium = 0, hard = 0, totalSolved = 0;
-    acList.forEach(it => {
-      const d = String(it.difficulty || '').toLowerCase();
-      const c = Number(it.count || 0);
-      if(d.includes('easy')) easy = c;
-      else if(d.includes('medium')) medium = c;
-      else if(d.includes('hard')) hard = c;
-      else if(d === 'all') totalSolved = c;
-    });
-    if(!totalSolved) totalSolved = easy + medium + hard;
-
-    easyEl.textContent = fmt(easy);
-    medEl.textContent  = fmt(medium);
-    hardEl.textContent = fmt(hard);
-    subEl.textContent  = totalSolved > 0 ? `${fmt(totalSolved)} solved` : '—';
-
-    let pct = 0;
-    if(totalProblems > 0) pct = Math.round((totalSolved / totalProblems) * 10000) / 100;
-    setDonut(pct);
-  }
-
-  // Try direct endpoint, with one retry, then fallback to proxy (if provided)
- async function loadWithFallback() {
-  const body = { query, variables: { username: USERNAME } };
-
-  // If deployed (not local), use proxy immediately and return the result
-  if (USE_PROXY_ALWAYS && PROXY_URL) {
+  async function loadLeetCode() {
     try {
-      const pdata = await postJson(PROXY_URL, body, { mode: 'cors' });
-      fillFromGraphQL(pdata);
-      return;
+      const res = await fetch(PROXY_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query,
+          variables: { username: USERNAME }
+        })
+      });
+
+      const json = await res.json();
+
+      const allQ = json?.data?.allQuestionsCount || [];
+      const stats = json?.data?.matchedUser?.submitStatsGlobal?.acSubmissionNum || [];
+
+      let totalProblems = 0;
+      allQ.forEach(q => totalProblems += Number(q.count || 0));
+
+      let easy = 0, medium = 0, hard = 0, total = 0;
+      stats.forEach(s => {
+        if (s.difficulty === "Easy") easy = s.count;
+        if (s.difficulty === "Medium") medium = s.count;
+        if (s.difficulty === "Hard") hard = s.count;
+        if (s.difficulty === "All") total = s.count;
+      });
+
+      easyEl.textContent = easy;
+      medEl.textContent = medium;
+      hardEl.textContent = hard;
+      subEl.textContent = total + " solved";
+
+      const percent = totalProblems
+        ? Math.round((total / totalProblems) * 10000) / 100
+        : 0;
+
+      setDonut(percent);
+
     } catch (err) {
-      console.warn('Proxy fetch failed (unexpected):', err);
-      showUnavailable('Profile unavailable');
-      return;
+      console.warn("LeetCode fetch failed:", err);
+      showUnavailable("Profile unavailable");
     }
   }
 
-  // --- keep existing direct -> proxy fallback below for local dev if you want ---
-  // (your original direct/proxy fallback code goes here)
-}
-
-    // Helper to attempt proxy fetch
-    async function tryProxy(proxyUrl) {
-      if(!proxyUrl) throw new Error('No proxy configured');
-      try {
-        // Our proxy expects the same POST body and forwards to LeetCode
-        const json = await postJson(proxyUrl, body, { mode: 'cors' });
-        return json;
-      } catch (err) {
-        console.warn('Proxy fetch failed:', err);
-        throw err;
-      }
-    }
-
-    // Attempt flow
-    try {
-      let data = null;
-      if(!directPreviouslyFailed) {
-        // Try direct once
-        try {
-          data = await tryDirect();
-        } catch (errDirect) {
-          // direct failed; set flag so refresh uses proxy
-          sessionStorage.setItem('lc_direct_failed', '1');
-          // small delay then try direct once more (some transient cases)
-          await new Promise(r => setTimeout(r, 450));
-          try {
-            data = await tryDirect();
-            // success: clear flag
-            sessionStorage.removeItem('lc_direct_failed');
-          } catch (err2) {
-            // still failing — proceed to proxy attempt
-            console.warn('Direct fetch retried and failed, will try proxy if available.');
-            throw err2;
-          }
-        }
-      } else {
-        // direct previously failed: try proxy immediately (skip direct)
-        throw new Error('Direct previously failed — skipping to proxy');
-      }
-
-      // If we have data from direct, render it
-      if(data) { fillFromGraphQL(data); return; }
-    } catch (directErr) {
-      // Try proxy fallback
-      if(PROXY_URL) {
-        try {
-          const pdata = await tryProxy(PROXY_URL);
-          // proxy succeeded — clear direct-failed flag so future tabs can try direct again
-          sessionStorage.removeItem('lc_direct_failed');
-          if(pdata) { fillFromGraphQL(pdata); return; }
-        } catch (proxyErr) {
-          console.error('Both direct and proxy failed:', proxyErr);
-          showUnavailable('Profile unavailable');
-          return;
-        }
-      } else {
-        // no proxy provided — show friendly message and keep flag set
-        console.warn('No proxy configured and direct fetch failed. Set PROXY_URL to use a proxy.');
-        showUnavailable('Profile unavailable (CORS)');
-        return;
-      }
-    }
-  }
-
-  // Run loader when DOM ready
   if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', loadWithFallback);
+    document.addEventListener('DOMContentLoaded', loadLeetCode);
   } else {
-    loadWithFallback();
+    loadLeetCode();
   }
-
 })();
-
-
-// === LeetCode endpoint configuration ===
-const USERNAME = 'ShaikMohdFaizSayeed';
-const DIRECT_ENDPOINT = 'https://leetcode.com/graphql';
-
-// Use the proxy worker to avoid CORS from browsers.
-// Make the deployed site prefer the proxy; only try direct when running locally.
-const IS_LOCAL = (location.hostname === '127.0.0.1' || location.hostname === 'localhost');
-const PROXY_URL = "https://bold-resonance-1a80.faizsayeed16556.workers.dev/";
-const USE_PROXY_ALWAYS = !IS_LOCAL;
